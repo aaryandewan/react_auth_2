@@ -24,6 +24,7 @@ export function AuthProvider({ children }) {
     currentUser,
     signup,
     signin,
+    logout,
   };
 
   function signup(email, password) {
@@ -32,6 +33,10 @@ export function AuthProvider({ children }) {
 
   function signin(email, password) {
     return auth.signInWithEmailAndPassword(email, password);
+  }
+
+  function logout() {
+    return auth.signOut();
   }
 
   return (
