@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useHistory } from "react-router-dom";
+import { db } from "../firebase";
 
 import {
   createMuiTheme,
@@ -82,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialFValues = {
-  id: 0,
   fullName: "",
   branch: "",
   grName: "",
@@ -92,6 +92,7 @@ const initialFValues = {
 
 export default function Dashboard() {
   const { currentUser, logout } = useAuth();
+  const uid = currentUser.uid;
   const history = useHistory();
 
   const [state, setState] = React.useState({
@@ -169,6 +170,16 @@ export default function Dashboard() {
     };
     console.log("FATAAAAA");
     console.log(finalFormData);
+
+    db.collection("userFormData")
+      .doc(uid)
+      .set(finalFormData)
+      .then(() => {
+        console.log("Data uploaded successfully");
+      })
+      .catch((err) => {
+        console.log("ERRRRRRRRRR", err);
+      });
 
     // const {
     //   fullName,
