@@ -17,7 +17,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -63,6 +63,8 @@ const initialFormValues = {
 };
 
 export default function Signup() {
+  const history = useHistory();
+  const { login } = useAuth();
   const { signup, currentUser } = useAuth();
   const [radioValue, setRadioValue] = useState("smc");
   const [values, setValues] = useState(initialFormValues);
@@ -101,6 +103,7 @@ export default function Signup() {
       setError("");
       setLoading(true);
       await signup(finalFormData.email, finalFormData.password);
+      history.push("/");
     } catch {
       setError("Failed to create user");
     }
