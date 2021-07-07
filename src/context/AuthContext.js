@@ -25,7 +25,12 @@ export function AuthProvider({ children }) {
     signup,
     signin,
     logout,
+    resetPassword,
   };
+
+  function resetPassword(email) {
+    return auth.sendPasswordResetEmail(email);
+  }
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
